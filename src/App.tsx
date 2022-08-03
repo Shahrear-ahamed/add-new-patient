@@ -1,10 +1,13 @@
 import React from 'react';
+import AddNewPatient from "./Components/AddNewPatient";
+import PatientInfo from "./Components/PatientInfo";
 
 function App() {
   return (
-    <div>
-        <h1>Hi</h1>
-    </div>
+    <>
+        <AddNewPatient />
+        <PatientInfo />
+    </>
   );
 }
 

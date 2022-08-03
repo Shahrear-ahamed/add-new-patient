@@ -1,0 +1,17 @@
+.header-title-div{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #909090;
+}
+
+.header-top-title{
+    font-weight: 600;
+}
+
+.important-field:after{
+    content: "*";
+    color: #ca0000;
+    font-weight: bold;
+}
