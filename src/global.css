@@ -1,3 +1,11 @@
+.wrapper{
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+}
+.details-div{
+    padding: 10px;
+}
 .header-title-div{
     height: 50px;
     display: flex;
@@ -10,8 +18,24 @@
     font-weight: 600;
 }
 
+.important-field{
+    margin-right: 40px;
+}
 .important-field:after{
     content: "*";
     color: #ca0000;
     font-weight: bold;
+}
+input{
+    padding: 6px 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+input:focus{
+    background-color: #f6f67b;
+    box-shadow: 5px 5px 20px #909090;
+}
+.buttons-div{
+    display: flex;
+    justify-content: end;
 }
