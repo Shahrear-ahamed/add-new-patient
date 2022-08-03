@@ -8,7 +8,6 @@ import Grid from '@mui/material/Grid';
 import * as Yup from  "yup";
 
 
-
 interface addNewPatientDetails {
     name: string;
     age:string;
@@ -40,13 +39,15 @@ const PatientInfo = () => {
                             </Grid>
 
                             <Grid display="flex" justifyContent="center" alignItems="center" item xs={4}>
-                                {/*<Box sx={{ alignItems: 'flex-start' }}><Box/>*/}
-                                    <label htmlFor="name" className="important-field">Date of Birth or Age</label>
-                                    <Field id="name" name="name" placeholder="Enter Name" />
+                                    <label htmlFor="age" className="important-field">Date of Birth or Age</label>
+                                    <Field id="age" name="age" placeholder="DD/MM/YYYY or Age in Years" />
                             </Grid>
                             <Grid display="flex" justifyContent="center" alignItems="center" item xs={3}>
-                                    <label htmlFor="name" className="important-field">Sex</label>
-                                    <Field id="name"  name="name" placeholder="Enter Name" />
+                                <label htmlFor="sex" className="important-field">Sex</label>
+                                <Field as="select" id="sex" name="sex" placeholder="Enter Sex">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </Field>
                             </Grid>
                         </Grid>
                     </Box>
