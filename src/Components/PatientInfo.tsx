@@ -13,6 +13,8 @@ interface addNewPatientDetails {
     name: string;
     age:string;
     sex: string;
+    mobile: string;
+    govId: string;
 }
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is require"),
@@ -21,7 +23,7 @@ const ValidationSchema = Yup.object().shape({
 })
 const PatientInfo = () => {
 
-    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" };
+    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:""};
 
     return (
         <Box sx={{ boxShadow: 3,borderRadius: 2, p:2 }}>
@@ -35,36 +37,62 @@ const PatientInfo = () => {
                 }}
             >
                 <Form>
-                    <h4 className="details-title">Patient Details</h4>
-                    <Box sx={{ flexGrow: 1}}>
-                        <Grid container spacing={5}>
-                            <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={5}>
-                                <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
-                                    <label htmlFor="name" className="important-field">First Name</label>
-                                    <Field id="name"  name="name" placeholder="Enter Name" />
-                                </Box>
-                                <ShowError name="name" />
-                            </Grid>
-                            <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={4}>
+                    <div>
+                        <h4 className="details-title">Patient Details</h4>
+                        <Box sx={{ flexGrow: 1}}>
+                            <Grid container spacing={5}>
+                                <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={5}>
+                                    <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
+                                        <label htmlFor="name" className="important-field">First Name</label>
+                                        <Field id="name"  name="name" placeholder="Enter Name" />
+                                    </Box>
+                                    <ShowError name="name" />
+                                </Grid>
+                                <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={4}>
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
                                         <label htmlFor="age" className="important-field">Date of Birth or Age</label>
                                         <Field id="age" name="age" placeholder="DD/MM/YYYY or Age in Years" />
                                     </Box>
-                                <ShowError name="age" />
+                                    <ShowError name="age" />
+                                </Grid>
+                                <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={3}>
+                                    <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
+                                        <label htmlFor="sex" className="important-field">Sex</label>
+                                        <Field as="select" id="sex" name="sex" placeholder="Enter Sex">
+                                            <option value="">Choose one</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </Field>
+                                    </Box>
+                                    <ShowError name="sex" />
+                                </Grid>
                             </Grid>
-                            <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={3}>
-                                <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
-                                    <label htmlFor="sex" className="important-field">Sex</label>
-                                    <Field as="select" id="sex" name="sex" placeholder="Enter Sex">
-                                        <option value="">Choose one</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </Field>
-                                </Box>
-                                <ShowError name="sex" />
+                        </Box>
+
+                        <Box sx={{ flexGrow: 1}}>
+                            <Grid container spacing={5}>
+                                <Grid display="flex" flexDirection='column' justifyContent="flex-start" alignItems="flex-start" item xs={5}>
+                                    <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: "75%" }}>
+                                        <label htmlFor="mobile">Mobile</label>
+                                        <Field id="mobile" type="number"  name="mobile" placeholder="Enter Mobile" />
+                                    </Box>
+                                </Grid>
+                                <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={7}>
+                                    <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
+                                        <label htmlFor="govId">Govt Issued ID</label>
+                                        <Field as="select" id="govId" name="govId" placeholder="Select Id">
+                                            <option value="select id">Select Id</option>
+                                            <option value="nid cart">Nid Card</option>
+                                            <option value="adhar cart">Adhar Cart</option>
+                                            <option value="passport">Passport</option>
+                                        </Field>
+                                        <Field id="govId" name="govId" placeholder="Enter Govt ID" />
+                                    </Box>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Box>
+                        </Box>
+                    </div>
+
                     <button type="submit">Submit</button>
                     <div className="buttons-div">
                         <Stack direction="row" spacing={2}>
