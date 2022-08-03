@@ -32,20 +32,21 @@ const PatientInfo = () => {
                 }}
             >
                 <Form>
-                    <Box sx={{ flexGrow: 1 }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={5}>
+                    <Box sx={{ flexGrow: 1}}>
+                        <Grid container spacing={5}>
+                            <Grid display="flex" justifyContent="center" alignItems="center" item xs={5}>
                                 <label htmlFor="name" className="important-field">First Name</label>
-                                <Field id="name" name="name" placeholder="Enter Name" />
+                                <Field id="name"  name="name" placeholder="Enter Name" />
                             </Grid>
 
-                            <Grid item xs={4}>
+                            <Grid display="flex" justifyContent="center" alignItems="center" item xs={4}>
+                                {/*<Box sx={{ alignItems: 'flex-start' }}><Box/>*/}
                                     <label htmlFor="name" className="important-field">Date of Birth or Age</label>
                                     <Field id="name" name="name" placeholder="Enter Name" />
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid display="flex" justifyContent="center" alignItems="center" item xs={3}>
                                     <label htmlFor="name" className="important-field">Sex</label>
-                                    <Field id="name" name="name" placeholder="Enter Name" />
+                                    <Field id="name"  name="name" placeholder="Enter Name" />
                             </Grid>
                         </Grid>
                     </Box>
