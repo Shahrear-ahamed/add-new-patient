@@ -26,6 +26,10 @@
     color: #ca0000;
     font-weight: bold;
 }
+label{
+    width: 110px;
+    display: inline-block;
+}
 input{
     padding: 6px 5px;
     border-radius: 5px;
