@@ -10,6 +10,52 @@ import "yup-phone"
 import ShowError from "./ShowError";
 
 
+// Enum are here
+enum Sex {
+    Male="Male",
+    Female="Female"
+}
+enum GovtId {
+    Nid= "Nid",
+    Pass= "Passport",
+    Drive="Driving Licence"
+}
+enum Guardian {
+    Father = "Father",
+    Mother="Mother",
+    Brother = "Brother",
+    Sister = "Sister"
+}
+enum MaritalStatus {
+    Married="Married",
+    Unmarried="Unmarried",
+}
+// noinspection SpellCheckingInspection
+enum State {
+    Aasham = "Aasham",
+    Bihar = "Bihar",
+    Modda = "Moddha Pradesh",
+    Uttar = "Uttar Pradesh"
+}
+
+enum ReligionTitle {
+    Buddha="Buddha",
+    Christian="Christian",
+    Hindu="Hindu",
+    Islam="Islam",
+    other="Other",
+}
+enum BloodGrp {
+    A="A+",
+    B="A-",
+    C="B+",
+    D="B-",
+    E="O+",
+    F="O-",
+    G = "AB+",
+    H ="AB-"
+}
+
 interface addNewPatientDetails {
     name: string;
     age:string;
@@ -35,8 +81,15 @@ const ValidationSchema = yup.object().shape({
     age: yup.string().required("Age must be require"),
     sex: yup.string().required("Gender Require"),
     mobile:yup.string().matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,"phone number must be BD or IN"),
-    email: yup.string().matches(/^\w+([.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "invalid email address"),
-    maritalStatus: yup.string().required("Please select marital status")
+    guardianInfo: yup.object().shape({
+        relation: yup.boolean(),
+        guardianName: yup.string().when("relation",{
+            is:true,
+            then:yup.string().required("Guardian Name is required")
+        })
+    }),
+    email: yup.string().email(),
+    maritalStatus: yup.string().oneOf(Object.values(MaritalStatus)),
 })
 const PatientInfo = () => {
 
@@ -75,9 +128,8 @@ const PatientInfo = () => {
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
                                         <label htmlFor="sex" className="important-field">Sex</label>
                                         <Field as="select" id="sex" name="sex" placeholder="Enter Sex">
-                                            <option value="">Choose one</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="">Select One</option>
+                                            {Object.values(Sex).map(sex => <option key={sex} value={sex}>{sex}</option>)}
                                         </Field>
                                     </Box>
                                     <ShowError name="sex" />
@@ -98,9 +150,7 @@ const PatientInfo = () => {
                                             <Grid item sx={{pt:0}} xs={4}>
                                                 <Field as="select" id="govId" name="govId.type" placeholder="Select Id" style={{width:"100%"}}>
                                                     <option value="">Select Id</option>
-                                                    <option value="nid cart">Nid Card</option>
-                                                    <option value="aadhar cart">Aadhar Cart</option>
-                                                    <option value="passport">Passport</option>
+                                                    {Object.values(GovtId).map(id => <option key={id} value={id}>{id}</option>)}
                                                 </Field>
                                             </Grid>
                                             <Grid item xs={8}>
@@ -122,16 +172,13 @@ const PatientInfo = () => {
                                         <Grid item sx={{pt:0}} xs={5}>
                                             {/*here is patient guardian relation list*/}
                                             <Field as="select" id="guardianInfo" name="guardianInfo.relation" placeholder="Select Id">
-                                                <option value="">Select One</option>
-                                                <option value="father">Father</option>
-                                                <option value="mother">Mother</option>
-                                                <option value="brother">Brother</option>
-                                                <option value="sister">Sister</option>
-
+                                                <option value="">Select Guardian</option>
+                                                {Object.values(Guardian).map(guardianId => <option key={guardianId} value={guardianId}>{guardianId}</option>)}
                                             </Field>
                                         </Grid>
                                         <Grid item xs={7}>
                                             <Field id="guardianInfo" name="guardianInfo.guardianName" placeholder="Enter Guardian Name" style={{width:"100%"}} />
+                                            <ShowError name="guardianInfo.relation" />
                                         </Grid>
                                     </Grid>
                                 </Box>
@@ -143,7 +190,7 @@ const PatientInfo = () => {
                                 </Box>
                                 <ShowError name="email"/>
                             </Grid>
-                             <Grid item xs={4} sx={{display:"flex"}}>
+                             <Grid item xs={4} sx={{display:"flex", alignItems:"center"}}>
                                 <label htmlFor="emergencyContact">Emergency Contact</label>
                                 <Field id="emergencyContact" name="emergencyContact" placeholder="Enter Emergency no" />
                             </Grid>
@@ -162,20 +209,14 @@ const PatientInfo = () => {
                                 <label htmlFor="state">State</label>
                                 <Field as="select" id="state" name="state">
                                     <option value="">Select State</option>
-                                    <option value="asham">Asham</option>
-                                    <option value="bihar">Bihar</option>
-                                    <option value="Bombay">Asham</option>
-                                    <option value="uttar pradash">Uttar Prodash</option>
+                                    {Object.values(State).map(status => <option key={status} value={status}>{status}</option>)}
                                 </Field>
                             </Grid>
-                             <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                            <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
                                 <label htmlFor="city">City</label>
-                                 <Field as="select" id="city" name="city">
-                                     <option value="">Select city</option>
-                                     <option value="asham">Asham</option>
-                                     <option value="bihar">Bihar</option>
-                                     <option value="Bombay">Asham</option>
-                                     <option value="uttar pradash">city Prodash</option>
+                                <Field as="select" id="city" name="city">
+                                    <option value="">Select City</option>
+                                    {Object.values(State).map(status => <option key={status} value={status}>{status}</option>)}
                                  </Field>
                             </Grid>
                             <Grid item xs={5} sx={{ width: "75%", display:"flex", alignItems:"center" }}>
@@ -200,12 +241,7 @@ const PatientInfo = () => {
                                 <label htmlFor="religion">Religion</label>
                                 <Field as="select" id="religion" name="religion">
                                     <option value="">Select religion</option>
-                                    <option value="buddha">Buddha</option>
-                                    <option value="christian">Christian</option>
-                                    <option value="hindu">Hindu</option>
-                                    <option value="islam">Islam</option>
-                                    <option value="other">other</option>
-
+                                    {Object.values(ReligionTitle).map(status => <option key={status} value={status}>{status}</option>)}
                                 </Field>
                             </Grid>
 
@@ -214,8 +250,7 @@ const PatientInfo = () => {
                                     <label htmlFor="maritalStatus">Marital Status</label>
                                     <Field as="select" id="maritalStatus" name="maritalStatus">
                                         <option value="">Select One</option>
-                                        <option value="married">Married</option>
-                                        <option value="unmarried">Unmarried</option>
+                                        {Object.values(MaritalStatus).map(status => <option key={status} value={status}>{status}</option>)}
                                     </Field>
                                 </Box>
                                   <ShowError name="maritalStatus"/>
@@ -225,14 +260,7 @@ const PatientInfo = () => {
                                 <label htmlFor="bloodGroup">Blood Group</label>
                                 <Field as="select" id="bloodGroup" name="bloodGroup">
                                     <option value="">Select One</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O+">0+</option>
-                                    <option value="O-">0-</option>
+                                    {Object.values(BloodGrp).map(status => <option key={status} value={status}>{status}</option>)}
                                 </Field>
                             </Grid>
 
