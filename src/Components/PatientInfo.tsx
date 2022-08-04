@@ -39,7 +39,6 @@ const PatientInfo = () => {
                 <Form>
                     <div>
                         <h4 className="details-title">Patient Details</h4>
-                        <Box sx={{ flexGrow: 1}}>
                             <Grid container spacing={5}>
                                 <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={5}>
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
@@ -67,30 +66,31 @@ const PatientInfo = () => {
                                     <ShowError name="sex" />
                                 </Grid>
                             </Grid>
-                        </Box>
 
-                        <Box sx={{ flexGrow: 1}}>
-                            <Grid container spacing={5}>
-                                <Grid display="flex" flexDirection='column' justifyContent="flex-start" alignItems="flex-start" item xs={5}>
+                            <Grid container spacing={5} sx={{ flexGrow: 1, my:2, ml:0}}>
+                                <Grid display="flex" flexDirection='column' justifyContent="flex-start" alignItems="flex-start"  xs={5}>
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: "75%" }}>
-                                        <label htmlFor="mobile">Mobile</label>
+                                        <label htmlFor="mobile" >Mobile</label>
                                         <Field id="mobile" type="number"  name="mobile" placeholder="Enter Mobile" />
                                     </Box>
                                 </Grid>
-                                <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={7}>
-                                    <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
+                                <Grid display="flex" justifyContent="" alignItems="center"xs={7}>
                                         <label htmlFor="govId">Govt Issued ID</label>
-                                        <Field as="select" id="govId" name="govId" placeholder="Select Id">
-                                            <option value="select id">Select Id</option>
-                                            <option value="nid cart">Nid Card</option>
-                                            <option value="adhar cart">Adhar Cart</option>
-                                            <option value="passport">Passport</option>
-                                        </Field>
-                                        <Field id="govId" name="govId" placeholder="Enter Govt ID" />
-                                    </Box>
+                                        <Grid container spacing={4}  sx={{m:0}} >
+                                            <Grid>
+                                                <Field as="select" id="govId" name="govId" placeholder="Select Id">
+                                                    <option value="select id">Select Id</option>
+                                                    <option value="nid cart">Nid Card</option>
+                                                    <option value="adhar cart">Adhar Cart</option>
+                                                    <option value="passport">Passport</option>
+                                                </Field>
+                                            </Grid>
+                                            <Grid>
+                                                <Field id="govId" name="govId" placeholder="Enter Govt ID" />
+                                            </Grid>
+                                        </Grid>
                                 </Grid>
                             </Grid>
-                        </Box>
                     </div>
 
                     <button type="submit">Submit</button>

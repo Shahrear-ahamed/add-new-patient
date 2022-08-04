@@ -18,9 +18,9 @@
     text-decoration: underline;
 }
 
-.important-field{
-    margin-right: 25px;
-}
+/*.important-field{*/
+/*    margin-right: 25px;*/
+/*}*/
 .important-field:after{
     content: "*";
     color: #ca0000;
@@ -28,6 +28,7 @@
 }
 label{
     width: 110px;
+    /*margin-left: 25px;*/
     display: inline-block;
 }
 input,select{
