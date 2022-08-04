@@ -16,16 +16,19 @@ interface addNewPatientDetails {
     sex: string;
     mobile: string;
     govId: object;
+    guardianInfo:object;
+    email:string;
+    emergencyContact:string
 }
 const ValidationSchema = yup.object().shape({
     name: yup.string().required("Name is require"),
     age: yup.string().required("Age must be require"),
     sex: yup.string().required("Gender Require"),
-    mobile:yup.string().phone('IN'),
+    mobile:yup.string().matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,"phone number must be BD or IN"),
 })
 const PatientInfo = () => {
 
-    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""}};
+    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""},guardianInfo:{relation:"",guardianName:""},email:"",emergencyContact:""};
 
     return (
         <Box sx={{ boxShadow: 3,borderRadius: 2, p:2 }}>
@@ -41,7 +44,7 @@ const PatientInfo = () => {
                 <Form>
                     <div>
                         <h4 className="details-title">Patient Details</h4>
-                            <Grid container spacing={5}>
+                            <Grid container alignItems="center" columnSpacing={4} sx={{mt:1}}>
                                 <Grid display="flex" flexDirection='column' justifyContent="" alignItems="center" item xs={5}>
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: 1 }}>
                                         <label htmlFor="name" className="important-field">First Name</label>
@@ -69,31 +72,104 @@ const PatientInfo = () => {
                                 </Grid>
                             </Grid>
 
-                            <Grid container spacing={5} sx={{ flexGrow: 1, my:2, ml:0}}>
-                                <Grid display="flex" flexDirection='column' justifyContent="flex-start" alignItems="flex-start"  xs={5}>
+                            <Grid container spacing={3} sx={{ flexGrow: 1, my:2}}>
+                                <Grid display="flex" flexDirection='column' justifyContent="flex-start" alignItems="flex-start" item xs={5}>
                                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: "75%" }}>
                                         <label htmlFor="mobile" >Mobile</label>
                                         <Field id="mobile" type="number"  name="mobile" placeholder="Enter Mobile" />
                                     </Box>
                                     <ShowError name="mobile" />
                                 </Grid>
-                                <Grid display="flex" justifyContent="" alignItems="center" xs={7}>
+                                <Grid display="flex" justifyContent="" alignItems="center" item xs={7}>
                                         <label htmlFor="govId">Govt Issued ID</label>
-                                        <Grid container spacing={2}  sx={{m:0}} >
-                                            <Grid item xs={5}>
-                                                <Field as="select" id="govId" name="govId.type" placeholder="Select Id">
-                                                    <option value="select id">Select Id</option>
+                                        <Grid container columnSpacing={2}  sx={{m:0}} >
+                                            <Grid item sx={{pt:0}} xs={4}>
+                                                <Field as="select" id="govId" name="govId.type" placeholder="Select Id" style={{width:"100%"}}>
+                                                    <option value="">Select Id</option>
                                                     <option value="nid cart">Nid Card</option>
-                                                    <option value="adhar cart">Adhar Cart</option>
+                                                    <option value="aadhar cart">Aadhar Cart</option>
                                                     <option value="passport">Passport</option>
                                                 </Field>
                                             </Grid>
-                                            <Grid item xs={7}>
-                                                <Field id="govId" name="govId.cardNo" placeholder="Enter Govt ID" />
+                                            <Grid item xs={8}>
+                                                <Field  id="govId" name="govId.cardNo" placeholder="Enter Govt ID" style={{width:"100%"}}/>
                                             </Grid>
                                         </Grid>
                                 </Grid>
                             </Grid>
+                    </div>
+
+                    {/*// contact details are here*/}
+                    <div className="form-div">
+                        <h4>Contact Details</h4>
+                        <Grid container columnSpacing={3} sx={{mt:1}}>
+                            <Grid item sx={{display:"flex", alignItems:"center"}} xs={5}>
+                                <label htmlFor="govId">Guardian Details</label>
+                                <Grid container columnSpacing={2}  sx={{m:0}} >
+                                    <Grid item sx={{pt:0}} xs={5}>
+                                        {/*here is patient guardian relation list*/}
+                                        <Field as="select" id="guardianInfo" name="guardianInfo.relation" placeholder="Select Id">
+                                            <option value="">Select Id</option>
+                                            <option value="father">Father</option>
+                                            <option value="mother">Mother</option>
+                                            <option value="brother">Brother</option>
+                                            <option value="sister">Sister</option>
+
+                                        </Field>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Field id="guardianInfo" name="guardianInfo.guardianName" placeholder="Enter Guardian Name" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={3} sx={{display:"flex" , alignItems:"center"}}>
+                                <label htmlFor="email">Email</label>
+                                <Field id="email" name="email" placeholder="Enter Email" />
+                            </Grid>
+                             <Grid item xs={4} sx={{display:"flex"}}>
+                                <label htmlFor="emergencyContact">Emergency Contact</label>
+                                <Field id="emergencyContact" name="emergencyContact" placeholder="Enter Emergency no" />
+                            </Grid>
+                        </Grid>
+                    </div>
+
+                    {/*address details are here*/}
+                    <div className="form-div">
+                        <h4>Address Details</h4>
+                        <Grid container columnSpacing={3} rowSpacing={2} sx={{mt:1}}>
+                            <Grid item sx={{display:"flex", alignItems:"center"}} xs={5}>
+                                <label htmlFor="address">Address</label>
+                                <Field id="address" name="address" placeholder="Enter Address" />
+                            </Grid>
+                            <Grid item xs={4} sx={{display:"flex" , alignItems:"center"}}>
+                                <label htmlFor="state">State</label>
+                                <Field as="select" id="state" name="state">
+                                    <option value="">Select State</option>
+                                    <option value="asham">Asham</option>
+                                    <option value="bihar">Bihar</option>
+                                    <option value="Bombay">Asham</option>
+                                    <option value="uttar pradash">Uttar Prodash</option>
+                                </Field>
+                            </Grid>
+                             <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                                <label htmlFor="city">City</label>
+                                 <Field as="select" id="city" name="city">
+                                     <option value="">Select city</option>
+                                     <option value="asham">Asham</option>
+                                     <option value="bihar">Bihar</option>
+                                     <option value="Bombay">Asham</option>
+                                     <option value="uttar pradash">city Prodash</option>
+                                 </Field>
+                            </Grid>
+                            <Grid item xs={5} sx={{ width: "75%", display:"flex", alignItems:"center" }}>
+                                <label htmlFor="country">Country</label>
+                                <Field id="country" name="country" placeholder="Enter Country" />
+                            </Grid>
+                            <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                                <label htmlFor="pincode">Pincode</label>
+                                <Field id="pincode" name="pincode" placeholder="Enter Pincode" />
+                            </Grid>
+                        </Grid>
                     </div>
 
                     <button type="submit">Submit</button>
@@ -107,9 +183,6 @@ const PatientInfo = () => {
                             </Button>
                         </Stack>
                     </div>
-
-                    {/*// contact details are here*/}
-
                 </Form>
             </Formik>
         </Box>
