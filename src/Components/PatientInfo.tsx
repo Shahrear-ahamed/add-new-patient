@@ -172,7 +172,57 @@ const PatientInfo = () => {
                         </Grid>
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <div className="form-div">
+                        <h4>Other Details</h4>
+                        <Grid container columnSpacing={3} rowSpacing={2} sx={{mt:1}}>
+                            <Grid item sx={{display:"flex", alignItems:"center"}} xs={3}>
+                                <label htmlFor="occupation">Occupation</label>
+                                <Field id="occupation" name="occupation" placeholder="Enter occupation" />
+                            </Grid>
+                            <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                                <label htmlFor="religion">Religion</label>
+                                <Field as="select" id="religion" name="religion">
+                                    <option value="">Select city</option>
+                                    <option value="buddha">Buddha</option>
+                                    <option value="christian">Christian</option>
+                                    <option value="hindu">Hindu</option>
+                                    <option value="islam">Islam</option>
+                                    <option value="other">other</option>
+
+                                </Field>
+                            </Grid>
+
+                              <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                                <label htmlFor="marital">Marital Status</label>
+                                <Field as="select" id="marital" name="marital">
+                                    <option value="married">Married</option>
+                                    <option value="unmarried">Unmarried</option>
+                                </Field>
+                            </Grid>
+
+                              <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
+                                <label htmlFor="bloodGroup">Blood Group</label>
+                                <Field as="select" id="bloodGroup" name="bloodGroup">
+                                    <option value="a+">A+</option>
+                                    <option value="a-">A-</option>
+                                    <option value="b+">B+</option>
+                                    <option value="b-">B-</option>
+                                    <option value="ab+">AB+</option>
+                                    <option value="ab-">AB-</option>
+                                    <option value="o+">0+</option>
+                                    <option value="o-">0-</option>
+                                </Field>
+                            </Grid>
+
+                            <Grid item sx={{display:"flex", alignItems:"center"}} xs={3}>
+                                <label htmlFor="Nationality">Nationality</label>
+                                <Field id="Nationality" name="Nationality" placeholder="Enter Nationality" />
+                            </Grid>
+
+                        </Grid>
+                    </div>
+
+
                     <div className="buttons-div">
                         <Stack direction="row" spacing={2}>
                             <Button type="submit"  variant="outlined" startIcon={<DeleteIcon />}>
