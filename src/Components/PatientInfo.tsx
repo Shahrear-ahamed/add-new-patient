@@ -18,17 +18,29 @@ interface addNewPatientDetails {
     govId: object;
     guardianInfo:object;
     email:string;
-    emergencyContact:string
+    emergencyContact:string;
+    address:string;
+    state:string;
+    city:string;
+    country:string;
+    pincode:string;
+    occupation:string;
+    religion:string;
+    maritalStatus:string;
+    bloodGroup:string;
+    nationality:string;
 }
 const ValidationSchema = yup.object().shape({
     name: yup.string().required("Name is require"),
     age: yup.string().required("Age must be require"),
     sex: yup.string().required("Gender Require"),
     mobile:yup.string().matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,"phone number must be BD or IN"),
+    email: yup.string().matches(/^\w+([.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "invalid email address"),
+    maritalStatus: yup.string().required("Please select marital status")
 })
 const PatientInfo = () => {
 
-    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""},guardianInfo:{relation:"",guardianName:""},email:"",emergencyContact:""};
+    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""},guardianInfo:{relation:"",guardianName:""},email:"",emergencyContact:"", address:"",state:"", city:"",country:"",pincode:"",occupation:"",religion:"",maritalStatus:"", bloodGroup:"",nationality:""};
 
     return (
         <Box sx={{ boxShadow: 3,borderRadius: 2, p:2 }}>
@@ -103,28 +115,33 @@ const PatientInfo = () => {
                     <div className="form-div">
                         <h4>Contact Details</h4>
                         <Grid container columnSpacing={3} sx={{mt:1}}>
-                            <Grid item sx={{display:"flex", alignItems:"center"}} xs={5}>
-                                <label htmlFor="govId">Guardian Details</label>
-                                <Grid container columnSpacing={2}  sx={{m:0}} >
-                                    <Grid item sx={{pt:0}} xs={5}>
-                                        {/*here is patient guardian relation list*/}
-                                        <Field as="select" id="guardianInfo" name="guardianInfo.relation" placeholder="Select Id">
-                                            <option value="">Select Id</option>
-                                            <option value="father">Father</option>
-                                            <option value="mother">Mother</option>
-                                            <option value="brother">Brother</option>
-                                            <option value="sister">Sister</option>
+                            <Grid item sx={{display:"flex", flexDirection:"column", alignItems:"flex-start"}} xs={5}>
+                                <Box sx={{display:"flex", alignItems:"center", width:1}}>
+                                    <label htmlFor="govId">Guardian Details</label>
+                                    <Grid container columnSpacing={2}  sx={{m:0}} >
+                                        <Grid item sx={{pt:0}} xs={5}>
+                                            {/*here is patient guardian relation list*/}
+                                            <Field as="select" id="guardianInfo" name="guardianInfo.relation" placeholder="Select Id">
+                                                <option value="">Select One</option>
+                                                <option value="father">Father</option>
+                                                <option value="mother">Mother</option>
+                                                <option value="brother">Brother</option>
+                                                <option value="sister">Sister</option>
 
-                                        </Field>
+                                            </Field>
+                                        </Grid>
+                                        <Grid item xs={7}>
+                                            <Field id="guardianInfo" name="guardianInfo.guardianName" placeholder="Enter Guardian Name" style={{width:"100%"}} />
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={6}>
-                                        <Field id="guardianInfo" name="guardianInfo.guardianName" placeholder="Enter Guardian Name" />
-                                    </Grid>
-                                </Grid>
+                                </Box>
                             </Grid>
-                            <Grid item xs={3} sx={{display:"flex" , alignItems:"center"}}>
-                                <label htmlFor="email">Email</label>
-                                <Field id="email" name="email" placeholder="Enter Email" />
+                            <Grid item xs={3} sx={{display:"flex",flexDirection:"column" , alignItems:"center"}}>
+                                <Box sx={{display:"flex" , alignItems:"center"}}>
+                                    <label htmlFor="email">Email</label>
+                                    <Field id="email" name="email" placeholder="Enter Email" />
+                                </Box>
+                                <ShowError name="email"/>
                             </Grid>
                              <Grid item xs={4} sx={{display:"flex"}}>
                                 <label htmlFor="emergencyContact">Emergency Contact</label>
@@ -182,7 +199,7 @@ const PatientInfo = () => {
                             <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
                                 <label htmlFor="religion">Religion</label>
                                 <Field as="select" id="religion" name="religion">
-                                    <option value="">Select city</option>
+                                    <option value="">Select religion</option>
                                     <option value="buddha">Buddha</option>
                                     <option value="christian">Christian</option>
                                     <option value="hindu">Hindu</option>
@@ -192,31 +209,36 @@ const PatientInfo = () => {
                                 </Field>
                             </Grid>
 
-                              <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
-                                <label htmlFor="marital">Marital Status</label>
-                                <Field as="select" id="marital" name="marital">
-                                    <option value="married">Married</option>
-                                    <option value="unmarried">Unmarried</option>
-                                </Field>
+                              <Grid item xs={3} sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+                                <Box  sx={{display:"flex", alignItems:"center"}}>
+                                    <label htmlFor="maritalStatus">Marital Status</label>
+                                    <Field as="select" id="maritalStatus" name="maritalStatus">
+                                        <option value="">Select One</option>
+                                        <option value="married">Married</option>
+                                        <option value="unmarried">Unmarried</option>
+                                    </Field>
+                                </Box>
+                                  <ShowError name="maritalStatus"/>
                             </Grid>
 
                               <Grid item xs={3} sx={{display:"flex", alignItems:"center"}}>
                                 <label htmlFor="bloodGroup">Blood Group</label>
                                 <Field as="select" id="bloodGroup" name="bloodGroup">
-                                    <option value="a+">A+</option>
-                                    <option value="a-">A-</option>
-                                    <option value="b+">B+</option>
-                                    <option value="b-">B-</option>
-                                    <option value="ab+">AB+</option>
-                                    <option value="ab-">AB-</option>
-                                    <option value="o+">0+</option>
-                                    <option value="o-">0-</option>
+                                    <option value="">Select One</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">0+</option>
+                                    <option value="O-">0-</option>
                                 </Field>
                             </Grid>
 
                             <Grid item sx={{display:"flex", alignItems:"center"}} xs={3}>
-                                <label htmlFor="Nationality">Nationality</label>
-                                <Field id="Nationality" name="Nationality" placeholder="Enter Nationality" />
+                                <label htmlFor="nationality">Nationality</label>
+                                <Field id="nationality" name="nationality" placeholder="Enter Nationality" />
                             </Grid>
 
                         </Grid>
@@ -225,7 +247,7 @@ const PatientInfo = () => {
 
                     <div className="buttons-div">
                         <Stack direction="row" spacing={2}>
-                            <Button type="submit"  variant="outlined" startIcon={<DeleteIcon />}>
+                            <Button type="submit"  variant="outlined" endIcon={<DeleteIcon />}>
                                 Cancel
                             </Button>
                             <Button type="submit" variant="contained" color="success" endIcon={<SendIcon />}>
