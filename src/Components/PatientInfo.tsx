@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,SpellCheckingInspection
+
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -76,16 +78,17 @@ interface addNewPatientDetails {
     bloodGroup:string;
     nationality:string;
 }
+const bdInNumber = /^(?:\+88|88)?(01[3-9]\d{8})|(?:(?:\+|0{0,2})91(\s*-\s*)?|0?)?[789]\d{9}$/
 const ValidationSchema = yup.object().shape({
     name: yup.string().required("Name is require"),
     age: yup.string().required("Age must be require"),
     sex: yup.string().required("Gender Require"),
-    mobile:yup.string().matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,"phone number must be BD or IN"),
+    mobile:yup.string().matches( bdInNumber,"phone number must be BD or IN"),
     guardianInfo: yup.object().shape({
         relation: yup.boolean(),
         guardianName: yup.string().when("relation",{
             is:true,
-            then:yup.string().required("Guardian Name is required")
+            then:yup.string().required(),
         })
     }),
     email: yup.string().email(),
@@ -104,6 +107,9 @@ const PatientInfo = () => {
                 onSubmit={(values, actions) => {
                     console.log(values);
                     actions.setSubmitting(false);
+                    fetch("/")
+                        .then(res => res.json())
+                        .then(data => console.log(data))
                 }}
             >
                 <Form>
