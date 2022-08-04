@@ -5,7 +5,8 @@ import SendIcon from '@mui/icons-material/Send';
 import { Button, Stack} from "@mui/material";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import * as Yup from  "yup";
+import * as yup from  "yup";
+import "yup-phone"
 import ShowError from "./ShowError";
 
 
@@ -14,16 +15,17 @@ interface addNewPatientDetails {
     age:string;
     sex: string;
     mobile: string;
-    govId: string;
+    govId: object;
 }
-const ValidationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is require"),
-    age: Yup.string().required("Age must be require"),
-    sex: Yup.string().required("Gender Require")
+const ValidationSchema = yup.object().shape({
+    name: yup.string().required("Name is require"),
+    age: yup.string().required("Age must be require"),
+    sex: yup.string().required("Gender Require"),
+    mobile:yup.string().phone('IN'),
 })
 const PatientInfo = () => {
 
-    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:""};
+    const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""}};
 
     return (
         <Box sx={{ boxShadow: 3,borderRadius: 2, p:2 }}>
@@ -73,20 +75,21 @@ const PatientInfo = () => {
                                         <label htmlFor="mobile" >Mobile</label>
                                         <Field id="mobile" type="number"  name="mobile" placeholder="Enter Mobile" />
                                     </Box>
+                                    <ShowError name="mobile" />
                                 </Grid>
-                                <Grid display="flex" justifyContent="" alignItems="center"xs={7}>
+                                <Grid display="flex" justifyContent="" alignItems="center" xs={7}>
                                         <label htmlFor="govId">Govt Issued ID</label>
-                                        <Grid container spacing={4}  sx={{m:0}} >
-                                            <Grid>
-                                                <Field as="select" id="govId" name="govId" placeholder="Select Id">
+                                        <Grid container spacing={2}  sx={{m:0}} >
+                                            <Grid item xs={5}>
+                                                <Field as="select" id="govId" name="govId.type" placeholder="Select Id">
                                                     <option value="select id">Select Id</option>
                                                     <option value="nid cart">Nid Card</option>
                                                     <option value="adhar cart">Adhar Cart</option>
                                                     <option value="passport">Passport</option>
                                                 </Field>
                                             </Grid>
-                                            <Grid>
-                                                <Field id="govId" name="govId" placeholder="Enter Govt ID" />
+                                            <Grid item xs={7}>
+                                                <Field id="govId" name="govId.cardNo" placeholder="Enter Govt ID" />
                                             </Grid>
                                         </Grid>
                                 </Grid>
@@ -104,6 +107,9 @@ const PatientInfo = () => {
                             </Button>
                         </Stack>
                     </div>
+
+                    {/*// contact details are here*/}
+
                 </Form>
             </Formik>
         </Box>
