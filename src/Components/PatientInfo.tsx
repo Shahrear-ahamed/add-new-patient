@@ -100,7 +100,7 @@ const ValidationSchema = yup.object().shape({
         relation: yup.string(),
         guardianName: yup.string().when("relation",{
             is:(relation:any)=>Object.values(Guardian).includes(relation),
-            then:yup.string().required("Input guardian name {$path}"),
+            then:yup.string().required("Input guardian name"),
         })
     }),
     email: yup.string().email(),
