@@ -1,13 +1,16 @@
 import React from 'react';
 import './global.css'
-import AddNewPatient from "./Components/AddNewPatient";
-import PatientInfo from "./Components/PatientInfo";
+import {Routes,Route} from "react-router-dom";
+import  Home from "./Pages/Home.js"
+import SecondPage from "./Pages/SecondPage";
 
 function App() {
   return (
     <div className="wrapper">
-        <AddNewPatient />
-        <PatientInfo />
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/secondPage" element={<SecondPage />} />
+        </Routes>
     </div>
   );
 }
