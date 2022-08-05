@@ -2,6 +2,7 @@ import React from 'react';
 import PopOverCom from "../Components/PopOverCom";
 import TypographyText from "../Components/TypographyText";
 import StackCom from "../Components/StackCom";
+import ButtonsCom from "../Components/ButtonsCom";
 
 const SecondPage = () => {
     return (
@@ -10,6 +11,7 @@ const SecondPage = () => {
             <TypographyText />
             {/*<PopOverCom />*/}
             <StackCom />
+            <ButtonsCom />
         </div>
     );
 };

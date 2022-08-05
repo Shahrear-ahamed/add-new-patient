@@ -314,8 +314,7 @@ const PatientInfo = () => {
                     </div>
 
 
-                    <div className="buttons-div">
-                        <Stack direction="row" spacing={2}>
+                        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
                             <Button type="submit"  variant="outlined" endIcon={<DeleteIcon />}>
                                 Cancel
                             </Button>
@@ -323,7 +322,6 @@ const PatientInfo = () => {
                                 Submit
                             </Button>
                         </Stack>
-                    </div>
                 </Form>
             </Formik>
             <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>

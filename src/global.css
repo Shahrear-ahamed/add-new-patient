@@ -38,7 +38,3 @@ input:focus{
     background-color: #f6f67b;
     box-shadow: 5px 5px 20px #909090;
 }
-.buttons-div{
-    display: flex;
-    justify-content: end;
-}
