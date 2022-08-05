@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,SpellCheckingInspection
 
-import React from 'react';
+import React,{useState} from 'react';
 import {Field, Form, Formik} from 'formik';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
@@ -85,16 +85,18 @@ const ValidationSchema = yup.object().shape({
     sex: yup.string().required("Gender Require"),
     mobile:yup.string().matches( bdInNumber,"phone number must be BD or IN"),
     guardianInfo: yup.object().shape({
-        relation: yup.boolean(),
+        relation: yup.string(),
         guardianName: yup.string().when("relation",{
-            is:true,
-            then:yup.string().required(),
+            is:(relation:any)=>Object.values(Guardian).includes(relation),
+            then:yup.string().required("Input guardian name {$path}"),
         })
     }),
     email: yup.string().email(),
     maritalStatus: yup.string().oneOf(Object.values(MaritalStatus)),
 })
 const PatientInfo = () => {
+    const [result,setResult] = useState(null);
+    console.log("Server is back ",result)
 
     const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""},guardianInfo:{relation:"",guardianName:""},email:"",emergencyContact:"", address:"",state:"", city:"",country:"",pincode:"",occupation:"",religion:"",maritalStatus:"", bloodGroup:"",nationality:""};
 
@@ -107,9 +109,16 @@ const PatientInfo = () => {
                 onSubmit={(values, actions) => {
                     console.log(values);
                     actions.setSubmitting(false);
-                    fetch("/")
-                        .then(res => res.json())
-                        .then(data => console.log(data))
+                    // fetch("http://localhost:5000/send-data",{
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify(values)
+                    // })
+                    //     .then(res => res.json())
+                    //     .then(data => setResult(data))
+                    //     .catch(err => console.log(err.message))
                 }}
             >
                 <Form>
@@ -184,7 +193,7 @@ const PatientInfo = () => {
                                         </Grid>
                                         <Grid item xs={7}>
                                             <Field id="guardianInfo" name="guardianInfo.guardianName" placeholder="Enter Guardian Name" style={{width:"100%"}} />
-                                            <ShowError name="guardianInfo.relation" />
+                                            <ShowError name="guardianInfo.guardianName" />
                                         </Grid>
                                     </Grid>
                                 </Box>
