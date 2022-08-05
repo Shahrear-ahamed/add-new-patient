@@ -3,6 +3,8 @@ import PopOverCom from "../Components/PopOverCom";
 import TypographyText from "../Components/TypographyText";
 import StackCom from "../Components/StackCom";
 import ButtonsCom from "../Components/ButtonsCom";
+import AutoComplete from "../Components/AutoComplete";
+import TextFieldCom from "../Components/TextFieldCom";
 
 const SecondPage = () => {
     return (
@@ -12,6 +14,8 @@ const SecondPage = () => {
             {/*<PopOverCom />*/}
             <StackCom />
             <ButtonsCom />
+            {/*<AutoComplete />*/}
+            <TextFieldCom />
         </div>
     );
 };

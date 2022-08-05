@@ -34,7 +34,7 @@ input,select{
     width: 80%;
     border: 1px solid gray;
 }
-input:focus{
-    background-color: #f6f67b;
-    box-shadow: 5px 5px 20px #909090;
-}
+/*input:focus{*/
+/*    background-color: #f6f67b;*/
+/*    box-shadow: 5px 5px 20px #909090;*/
+/*}*/
