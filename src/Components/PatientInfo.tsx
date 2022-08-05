@@ -7,6 +7,8 @@ import SendIcon from '@mui/icons-material/Send';
 import { Button, Stack} from "@mui/material";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import * as yup from  "yup";
 import "yup-phone"
 import ShowError from "./ShowError";
@@ -78,6 +80,16 @@ interface addNewPatientDetails {
     bloodGroup:string;
     nationality:string;
 }
+
+// Snacksbar
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 const bdInNumber = /^(?:\+88|88)?(01[3-9]\d{8})|(?:(?:\+|0{0,2})91(\s*-\s*)?|0?)?[789]\d{9}$/
 const ValidationSchema = yup.object().shape({
     name: yup.string().required("Name is require"),
@@ -95,8 +107,17 @@ const ValidationSchema = yup.object().shape({
     maritalStatus: yup.string().oneOf(Object.values(MaritalStatus)),
 })
 const PatientInfo = () => {
-    const [result,setResult] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [result,setResult] = useState<{status: number; message: string}>({ status: 0, message: "", });
     console.log("Server is back ",result)
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setIsOpen(false);
+    };
 
     const initialValues: addNewPatientDetails = { name: '', age:"", sex:"" , mobile:"", govId:{type:"",cardNo:""},guardianInfo:{relation:"",guardianName:""},email:"",emergencyContact:"", address:"",state:"", city:"",country:"",pincode:"",occupation:"",religion:"",maritalStatus:"", bloodGroup:"",nationality:""};
 
@@ -109,16 +130,21 @@ const PatientInfo = () => {
                 onSubmit={(values, actions) => {
                     console.log(values);
                     actions.setSubmitting(false);
-                    // fetch("http://localhost:5000/send-data",{
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(values)
-                    // })
-                    //     .then(res => res.json())
-                    //     .then(data => setResult(data))
-                    //     .catch(err => console.log(err.message))
+                    fetch("http://localhost:5000/send-data",{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(values)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            setResult(data)
+                            if(data.status === 200){
+                                return  setIsOpen(true)
+                            }
+                        })
+                        .catch(err => console.log(err.message))
                 }}
             >
                 <Form>
@@ -300,6 +326,11 @@ const PatientInfo = () => {
                     </div>
                 </Form>
             </Formik>
+            <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    {result&& result.message}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };
